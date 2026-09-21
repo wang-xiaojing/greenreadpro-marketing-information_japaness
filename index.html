@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenRead Pro - ゴルフグリーン傾斜測定アプリ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif;
+            line-height: 1.9;
+            color: #333;
+            background: #f7f8fa;
+        }
+
+        /* ヘッダー */
+        .header {
+            background: linear-gradient(135deg, #1f6f43 0%, #2E8B57 55%, #4CAF7D 100%);
+            color: #fff;
+            text-align: center;
+            padding: 64px 16px 56px;
+        }
+        .header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 2.0em;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .header .subtitle {
+            font-size: 1.1em;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+        .header .badges {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .header .badge {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.85em;
+        }
+
+        /* メイン */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* セクション */
+        section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 36px 28px;
+            margin: 28px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        section h2 {
+            font-size: 1.35em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        section h3 {
+            font-size: 1.05em;
+            color: #4a5568;
+            margin: 24px 0 10px;
+        }
+        section p {
+            font-size: 0.95em;
+            margin-bottom: 12px;
+        }
+        section ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+        section li {
+            font-size: 0.95em;
+            margin-bottom: 6px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .feature-card .icon {
+            font-size: 1.6em;
+            margin-bottom: 8px;
+        }
+        .feature-card h3 {
+            margin: 0 0 6px 0;
+            font-size: 0.95em;
+            color: #333;
+        }
+        .feature-card p {
+            font-size: 0.85em;
+            color: #666;
+            margin: 0;
+        }
+
+        /* 使い方ステップ */
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            margin-top: 8px;
+        }
+        .step {
+            background: #eef7f1;
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .step .num {
+            display: inline-block;
+            background: #2E8B57;
+            color: #fff;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .step h3 {
+            margin: 0 0 6px 0;
+            font-size: 0.95em;
+            color: #1f6f43;
+        }
+        .step p {
+            font-size: 0.85em;
+            color: #555;
+            margin: 0;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 48px 16px;
+        }
+        .cta-section h2 {
+            font-size: 1.3em;
+            border: none;
+            margin-bottom: 12px;
+            padding: 0;
+        }
+        .cta-section p {
+            color: #666;
+            margin-bottom: 24px;
+        }
+        .appstore-button {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.0em;
+            transition: opacity 0.2s;
+        }
+        .appstore-button:hover { opacity: 0.85; }
+
+        .privacy-box {
+            background: #eef7f1;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 24px 0;
+            font-size: 0.9em;
+        }
+        .privacy-box h3 {
+            color: #1f6f43;
+            margin: 0 0 8px 0;
+        }
+        .privacy-box p { margin: 0; }
+
+        .device-note {
+            background: #eef5ff;
+            border-left: 4px solid #4A90D9;
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 0.9em;
+        }
+
+        .caution-note {
+            background: #fff8f0;
+            border-left: 4px solid #ed8936;
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 0.9em;
+        }
+
+        footer {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.8em;
+            padding: 40px 16px;
+        }
+        footer a {
+            color: #888;
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; }
+            .header { padding: 48px 16px 40px; }
+            .header h1 { font-size: 1.6em; }
+            header img { width: 90px; height: 90px; }
+            section { padding: 24px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========================= HEADER ========================= -->
+<header class="header">
+    <img src="GreenReadPro_Icon.jpg" alt="GreenRead Pro アイコン" onerror="this.style.display='none'">
+    <h1>GreenRead Pro</h1>
+    <p class="subtitle">グリーンリード プロ - ゴルフグリーン傾斜測定＆ライン読み支援</p>
+    <div class="badges">
+        <span class="badge">LiDAR 高精度計測</span>
+        <span class="badge">アカウント登録不要</span>
+        <span class="badge">計測データは端末内で完結</span>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- ========================= イントロ ========================= -->
+    <section>
+        <h2>グリーンの傾斜を、その場で「見える化」。</h2>
+        <p>
+            GreenRead Pro（グリーンリード プロ）は、iPhone / iPad の LiDAR スキャナとカメラを使って
+            ゴルフグリーン上の傾斜を計測し、パッティングのライン読みを支援する計測補助アプリです。
+        </p>
+        <p>
+            実際のボールとピン（旗）を画面に合わせ、端末の傾きを水平に整えるだけ。
+            距離・高低差・ブレイク（曲がり）・下り坂の向き・予想される転がりラインを、
+            カメラ映像の上にそのまま重ねて表示します。
+        </p>
+        <p>
+            面倒なアカウント登録は不要で、計測はすべて端末内で完結。
+            電波の届かないコースでも、そのままお使いいただけます。
+        </p>
+    </section>
+
+    <!-- ========================= 機能一覧 ========================= -->
+    <section>
+        <h2>主な機能</h2>
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <div class="icon">⛳</div>
+                <h3>LiDAR による傾斜計測</h3>
+                <p>LiDAR スキャナが捉えたグリーン面の3次元形状から傾斜を推定し、下り坂の向きを矢印で表示します。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🎯</div>
+                <h3>タップでボール＆ピン設置</h3>
+                <p>画面を押さえると表示される拡大円で、実際のボールとピンに正確に位置合わせ。自動切替にも対応します。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">📏</div>
+                <h3>距離と高低差</h3>
+                <p>ボールからピンまでの3D直線距離を m / cm / yd で表示。打ち上げ（＋）・打ち下ろし（−）の高低差も一目で分かります。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🌀</div>
+                <h3>ブレイク（曲がり）</h3>
+                <p>ボールが曲がる量と方向（H＝左 / S＝右）を算出。グリーン速度の設定に応じてブレイクの配分を調整します。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🟦</div>
+                <h3>転がりライン＆狙い線</h3>
+                <p>予想されるパッティング軌道を青い曲線で、狙う方向を赤い点線で表示。ラインの読みを視覚的にサポートします。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🧭</div>
+                <h3>デバイス姿勢メーター</h3>
+                <p>X / Y メーターで端末の水平をガイド。0° 近傍にそろうと自動でホールドし、測定値が確定します。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>グリーン断面図</h3>
+                <p>ボールからピンまでの高低変化を断面図で表示。起伏の傾向を、数字だけでなく形でも確認できます。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">💾</div>
+                <h3>設定のバックアップ</h3>
+                <p>細かくカスタマイズした設定を JSON ファイルに書き出し・復元。機種変更や再インストール時も安心です。</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================= 使い方 ========================= -->
+    <section>
+        <h2>使い方は、わずか3ステップ</h2>
+        <div class="steps">
+            <div class="step">
+                <span class="num">1</span>
+                <h3>ボールを設置</h3>
+                <p>実際のボールとピンが映るように端末を構え、拡大円の十字をボールに合わせます。</p>
+            </div>
+            <div class="step">
+                <span class="num">2</span>
+                <h3>ピンを設置</h3>
+                <p>同じように拡大円の十字をピン（旗）に合わせると、測定値の表示に切り替わります。</p>
+            </div>
+            <div class="step">
+                <span class="num">3</span>
+                <h3>姿勢を整えて確定</h3>
+                <p>メーターの針が 0° 近傍にそろうと自動ホールド。ラインと測定値を確認できます。</p>
+            </div>
+        </div>
+        <p style="margin-top:16px; font-size:0.85em; color:#666;">
+            ※ 端末を水平に保ち、ボールとピンを画面中央付近に置くと、より安定した計測ができます。
+        </p>
+    </section>
+
+    <!-- ========================= 利用シーン ========================= -->
+    <section>
+        <h2>こんな方におすすめ</h2>
+        <ul>
+            <li>グリーンの傾斜が読みにくいコースで、ライン読みの根拠がほしい方に</li>
+            <li>打ち上げ・打ち下ろしを加味した距離感を、その場で確認したい方に</li>
+            <li>練習ラウンドで、傾斜とブレイクの関係を研究したい方に</li>
+            <li>アプローチ前に、高低差込みの距離を素早く把握したい方に</li>
+            <li>パッティング練習の前後に、グリーンの傾向を記録・確認したい方に</li>
+        </ul>
+    </section>
+
+    <!-- ========================= 無料体験と購入 ========================= -->
+    <section>
+        <h2>無料体験と購入</h2>
+        <p>
+            初回起動時のメッセージで「OK」を選ぶと、<strong>累積1時間まで</strong>すべての機能を無料でお試しいただけます。
+            体験時間が終了すると、機能限定の体験版へ自動的に切り替わります。
+        </p>
+        <p>
+            全機能版は買い切り（非消耗型）のアプリ内課金です。購入すると、次の内容が利用可能になります。
+        </p>
+        <ul>
+            <li>設定のすべての項目を変更できます</li>
+            <li>設定データのバックアップ（書き出し・復元）が使えます</li>
+            <li>アプリ内のバナー広告が非表示になります</li>
+        </ul>
+        <p>
+            購入は Apple ID に永続的に紐付くため、機種変更や再インストール後も
+            「購入をリストア」から無料で復元できます。価格は App Store の購入画面に表示されます。
+        </p>
+    </section>
+
+    <!-- ========================= プライバシー ========================= -->
+    <div class="privacy-box">
+        <h3>プライバシー</h3>
+        <p>
+            計測データや設定内容は、すべてお使いの端末内にのみ保存されます。
+            カメラや LiDAR で取得したデータは計測処理のみに利用され、外部サーバーへ送信されることはありません。
+            アカウント登録も不要です。
+        </p>
+    </div>
+
+    <!-- ========================= 動作環境 ========================= -->
+    <div class="device-note">
+        <strong>動作環境</strong><br>
+        本アプリは LiDAR スキャナを搭載した端末（iPhone 12 Pro 以降、iPad Pro）が必要です。
+        LiDAR 非対応の端末では傾斜測定をご利用いただけません。
+    </div>
+
+    <!-- ========================= 注意事項 ========================= -->
+    <div class="caution-note">
+        <strong>計測精度について</strong><br>
+        本アプリが示す傾斜値・距離・高低差・ブレイクは、LiDAR センサの性能、直射日光・芝の湿り・計測距離・
+        デバイスの角度・手ブレなどの影響により誤差が生じることがあります。表示される値はあくまで「参考値」であり、
+        絶対的な正確性を保証するものではありません。表示結果に基づく判断は、ユーザーご自身の責任において行ってください。
+        また、競技規則・ローカルルールにより、ラウンド中の電子機器利用が制限される場合があります。公式競技での使用可否は
+        必ず事前にご確認ください。
+    </div>
+
+    <!-- ========================= CTA ========================= -->
+    <div class="cta-section">
+        <h2>ダウンロードはこちら</h2>
+        <p>まずは累積1時間、すべての機能を無料でお試しいただけます。</p>
+        <!-- TODO: アプリ公開後、App Store の商品ページURLに置き換えてください -->
+        <a href="#" class="appstore-button">App Store で見る</a>
+    </div>
+
+</div>
+
+<!-- ========================= FOOTER ========================= -->
+<footer>
+    <p>
+        <!-- TODO: GitHub Pages 等で公開する場合は、実際の公開URLに置き換えてください -->
+        <a href="../privacy-policy_japaness/index.html">プライバシーポリシー</a>
+        &nbsp;|&nbsp;
+        <a href="../supportpage_japanese/index.html">サポート</a>
+        &nbsp;
+    </p>
+    <p style="margin-top: 12px;">&copy; 2026 wang xiaojing. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
